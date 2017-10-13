@@ -7,7 +7,6 @@ using System.Data;
 
 namespace DLL
 {
-    //测试
     public class AccessOpen
     {
         //测试
