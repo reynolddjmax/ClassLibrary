@@ -14,7 +14,7 @@ namespace DLL
         {
             //"Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
             conn = new OleDbConnection("Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + DataPath);
-            conn.Open();
+             conn.Open();
         }
 
         public void AccessClose()
@@ -87,7 +87,8 @@ namespace DLL
     public class Access
     {
 
-        public static DataTable ReadData(string Sql ,string DataPath)
+        #region 通用方法
+        public static DataTable ReadDataTable(string Sql ,string DataPath)
         {
             OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
             conn.Open();
@@ -114,7 +115,7 @@ namespace DLL
             return dt;
         }
 
-        public static string ReadDataS(string Sql, string DataPath)
+        public static string ReadString(string Sql, string DataPath)
         {
             OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
             conn.Open();
@@ -136,8 +137,7 @@ namespace DLL
             return Vaule;
         }
 
-
-        public static void WriteData(string Sql, string DataPath)
+        public static void Write(string Sql, string DataPath)
         {
             OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
             conn.Open();
@@ -147,6 +147,29 @@ namespace DLL
 
             conn.Close();
         }
+
+        public static bool CheckExist(string Sql, string DataPath)
+        {
+            OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
+            conn.Open();
+
+            OleDbCommand comm = new OleDbCommand(Sql, conn);
+            OleDbDataReader dr = comm.ExecuteReader();
+
+            conn.Close();
+
+            return dr.HasRows;
+        }
+        #endregion
+
+
+        #region 拓展方法
+        public static void AddRow(string Sql, string DataPath)
+        {
+            
+        }
+
+        #endregion
     }
 
 
