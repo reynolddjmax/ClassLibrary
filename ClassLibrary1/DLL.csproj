@@ -94,6 +94,12 @@
     <Compile Include="COM\DropBox\DropPanel.Designer.cs">
       <DependentUpon>DropPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="COM\Log.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="COM\Log.Designer.cs">
+      <DependentUpon>Log.cs</DependentUpon>
+    </Compile>
     <Compile Include="Exif\EXIFextractor.cs" />
     <Compile Include="Exif\translation.cs" />
     <Compile Include="Loading.cs">
@@ -142,6 +148,9 @@
   <ItemGroup>
     <EmbeddedResource Include="COM\DropBox\DropPanel.resx">
       <DependentUpon>DropPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="COM\Log.resx">
+      <DependentUpon>Log.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GetTime.resx">
       <DependentUpon>GetTime.cs</DependentUpon>
