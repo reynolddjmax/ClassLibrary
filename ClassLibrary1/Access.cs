@@ -14,7 +14,8 @@ namespace DLL
         public AccessOpen(string DataPath)
         {
             //"Provider=Microsoft.Jet.OLEDB.4.0;Data Source="
-            conn = new OleDbConnection("Provider=Microsoft.Ace.OleDb.12.0;Data Source=" + DataPath);
+            //"Provider=Microsoft.Ace.OleDb.12.0;Data Source="
+            conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + DataPath);
              conn.Open();
         }
 
@@ -138,7 +139,7 @@ namespace DLL
             return Vaule;
         }
 
-        public static void Write(string Sql, string DataPath)
+        public static void Execute(string Sql, string DataPath)
         {
             OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
             conn.Open();
@@ -155,6 +156,7 @@ namespace DLL
             conn.Open();
 
             OleDbCommand comm = new OleDbCommand(Sql, conn);
+            
             OleDbDataReader dr = comm.ExecuteReader();
 
             conn.Close();
@@ -165,9 +167,47 @@ namespace DLL
 
 
         #region 拓展方法
-        public static void AddRow(string Sql, string DataPath)
+
+        //插入列
+        //递增列名用Index，自动排除Index递增列
+        public static void InsertRow(string DataPath ,string TableName, params object[] objects)
         {
-            
+            OleDbConnection conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0 ;Data Source=" + DataPath);
+            conn.Open();
+
+            string ColLst = "";
+            string vaules = "";
+
+            using (OleDbCommand cmd = new OleDbCommand())
+            {
+                cmd.CommandText = "SELECT TOP 1 * FROM [" + TableName + "]";
+                cmd.Connection = conn;
+                OleDbDataReader dr = cmd.ExecuteReader();
+                for (int i = 0; i < dr.FieldCount; i++)
+                {
+                    if (dr.GetName(i).ToString().ToLower() == "index") continue;
+                    ColLst += ",[" + dr.GetName(i) + "]";
+                }
+            }
+
+            ColLst = ColLst.Substring(1);
+
+            foreach (var item in objects)
+            {
+                vaules += ",'" + item.ToString() + "'";
+            }
+            vaules = vaules.Substring(1);
+
+
+            string Sql = "insert into ["+TableName+"]("+ColLst+") values("+vaules+")";
+
+            using (OleDbCommand cmd = new OleDbCommand(Sql, conn))
+            {
+                cmd.ExecuteReader();
+            }
+
+
+            conn.Close();
         }
 
         #endregion
