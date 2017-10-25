@@ -26,7 +26,7 @@ namespace DLL.COM.DropBox
 
                 foreach (String s in files)
                 {
-
+                    Do(s);
                 }
 
             }
