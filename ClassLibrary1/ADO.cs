@@ -19,6 +19,7 @@ namespace DLL
         //Select 宗地编码,土地类型,承包方名称,承包方编码 From [地块信息$] Order By 承包方编码,宗地编码
         public static DataTable LoadExcel(string FilePath, string Sql)
         {
+
             ADODB.Connection conn = new ADODB.Connection();
             ADODB.Recordset rs = new ADODB.Recordset();
 
