@@ -134,6 +134,7 @@
     <Compile Include="COM\Log.Designer.cs">
       <DependentUpon>Log.cs</DependentUpon>
     </Compile>
+    <Compile Include="Encrypt.cs" />
     <Compile Include="Exif\EXIFextractor.cs" />
     <Compile Include="Exif\translation.cs" />
     <Compile Include="Loading.cs">
@@ -143,6 +144,7 @@
       <DependentUpon>Loading.cs</DependentUpon>
     </Compile>
     <Compile Include="TxtStr.cs" />
+    <Compile Include="WebGet.cs" />
     <Compile Include="XMLClass.cs" />
     <Compile Include="GeometricClass.cs" />
     <Compile Include="GetTime.cs">
