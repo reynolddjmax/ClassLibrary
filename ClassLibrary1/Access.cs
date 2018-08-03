@@ -48,6 +48,7 @@ namespace DLL
                 dt.Rows.Add(ddr);
             }
 
+            dr.Close();
             return dt;
         }
 
@@ -66,7 +67,7 @@ namespace DLL
 
             string Vaule = dr.GetValue(0).ToString();
 
-
+            dr.Close()
             return Vaule;
         }
 
@@ -78,7 +79,19 @@ namespace DLL
         }
 
 
+        public bool ExistData(string Sql)
+        {
 
+            OleDbCommand comm = new OleDbCommand(Sql, conn);
+
+            OleDbDataReader dr = comm.ExecuteReader();
+
+            bool result = dr.HasRows;
+
+            dr.Close();
+
+            return result;
+        }
 
 
     }
@@ -113,6 +126,8 @@ namespace DLL
                 }
                 dt.Rows.Add(ddr);
             }
+
+            dr.Close();
             conn.Close();
             return dt;
         }
@@ -135,6 +150,7 @@ namespace DLL
 
             string Vaule = dr.GetValue(0).ToString();
 
+            dr.Close();
             conn.Close();
             return Vaule;
         }
@@ -160,6 +176,7 @@ namespace DLL
             OleDbDataReader dr = comm.ExecuteReader();
 
             conn.Close();
+            dr.Close();
 
             return dr.HasRows;
         }
@@ -206,7 +223,7 @@ namespace DLL
                 cmd.ExecuteReader();
             }
 
-
+            dr.Close();
             conn.Close();
         }
 
