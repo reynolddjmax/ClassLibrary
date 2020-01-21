@@ -67,7 +67,7 @@ namespace DLL
 
             string Vaule = dr.GetValue(0).ToString();
 
-            dr.Close()
+            dr.Close();
             return Vaule;
         }
 
@@ -205,6 +205,8 @@ namespace DLL
                     if (dr.GetName(i).ToString().ToLower() == "index") continue;
                     ColLst += ",[" + dr.GetName(i) + "]";
                 }
+
+                dr.Close();
             }
 
             ColLst = ColLst.Substring(1);
@@ -223,7 +225,7 @@ namespace DLL
                 cmd.ExecuteReader();
             }
 
-            dr.Close();
+            
             conn.Close();
         }
 

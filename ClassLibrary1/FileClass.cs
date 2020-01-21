@@ -34,10 +34,10 @@ namespace DLL
                 {
 
                     if (List.Contains(filename.FullName) == false)
-	                {
+                    {
                         List.Add(filename.FullName);
-	                }
-                    
+                    }
+
                 }
 
 
@@ -113,7 +113,7 @@ namespace DLL
             }
         }
 
-        public static string OpenFile(string Title,string Filter)
+        public static string OpenFile(string Title, string Filter)
         {
             OpenFileDialog openFile = new OpenFileDialog();
             openFile.Title = "打开EXCEL文件";
@@ -141,7 +141,7 @@ namespace DLL
             return strLine;
         }
 
-        public static void WriteTxt(string Str,string FilePath)
+        public static void WriteTxt(string Str, string FilePath)
         {
             FileStream fs = new FileStream(FilePath, FileMode.Create);
             //获得字节数组
@@ -158,7 +158,7 @@ namespace DLL
         {
             string LastStr = "";
 
-            if (FileName.IndexOf(".") ==-1)
+            if (FileName.IndexOf(".") == -1)
             {
                 return false;
             }
@@ -231,7 +231,7 @@ namespace DLL
             //fileDialog.Multiselect = true;
 
             fileDialog.Title = "请选择文件" + Type;
-            fileDialog.Filter = "所有文件(*."+Type+")|*."+Type;
+            fileDialog.Filter = "所有文件(*." + Type + ")|*." + Type;
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 return fileDialog.FileName;
@@ -240,5 +240,49 @@ namespace DLL
 
             return "";
         }
+
+
+        //监视文件变化
+        public class FileWatcher
+        {
+
+            /// <param name="path">路径</param>
+            /// <param name="notifyfilter">NotifyFilter.XX | NotifyFilter.XX (Attributes CreationTime DirectoryName FileName LastAccess LastWrite Security Size)</param>
+            public FileWatcher(string path, NotifyFilters notifyfilter)
+            {
+                watcher = new FileSystemWatcher();
+                watcher.Path = path;
+                watcher.NotifyFilter = notifyfilter;
+
+                //发生更改时，更改事件就会发生
+                watcher.Changed += new FileSystemEventHandler(OnChanged);
+                //由FileSystemWatcher所指定的路径中文件或目录被创建时，创建事件就会发生
+                watcher.Created += new FileSystemEventHandler(OnChanged);
+                //当由FileSystemWatcher所指定的路径中文件或目录被删除时，删除事件就会发生
+                watcher.Deleted += new FileSystemEventHandler(OnChanged);
+                //当由FileSystemWatcher所指定的路径中文件或目录被重命名时，重命名事件就会发生
+                watcher.Renamed += new RenamedEventHandler(OnRenamed);
+                //开始监视
+                watcher.EnableRaisingEvents = true;
+            }
+
+            public FileSystemWatcher watcher;
+
+
+            //定义事件处理程序
+            public void OnChanged(object sender, FileSystemEventArgs e)
+            {
+
+            }
+            public void OnRenamed(object sender, RenamedEventArgs e)
+            {
+
+            }
+        }
+
+
+
     }
+
+
 }
